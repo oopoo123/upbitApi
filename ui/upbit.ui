@@ -178,6 +178,9 @@
     <property name="styleSheet">
      <string notr="true">border-color:rgb(255, 0, 0);border-style : solid;border-width :2px</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="alarm_price2">
     <property name="geometry">
@@ -190,6 +193,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-color:rgb(0, 0, 255);border-style : solid;border-width :2px</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="acc_trade_volume_label">

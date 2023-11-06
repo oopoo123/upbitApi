@@ -68,7 +68,7 @@ class MainWindow(QMainWindow, form_class):  # 슬롯 클래스
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle('Coin Price Overview')
-        self.setWindowIcon(QIcon('icon/bitcoin.png'))
+        self.setWindowIcon(QIcon('icon/coin.png'))
         self.statusBar().showMessage('ver 0.5')
         self.ticker = ticker
 
@@ -136,6 +136,7 @@ class MainWindow(QMainWindow, form_class):  # 슬롯 클래스
             self.coin_price_label.setStyleSheet("color:red;")
 
     def alarmButtonAction(self):
+        self.alarmFlag = 0
         if self.alarmButton.text() == "알람시작":
             self.alarmButton.setText("알람중지")
         else:
@@ -145,17 +146,22 @@ class MainWindow(QMainWindow, form_class):  # 슬롯 클래스
 
         if self.alarmButton.text() == "알람중지":
             if self.alarm_price1.text() == "" or self.alarm_price2.text() == "":
-                QMessageBox.warning(self, "입력오류", "알람금액을 모두 입력하신 수에 알람버튼을 눌러주세요!!")
-                self.alarmButton.setText("알람시작")
+                if self.alarmFlag == 0:
+                    self.alarmFlag = 1
+                    QMessageBox.warning(self, "입력오류", "알람금액을 모두 입력하신 수에 알람버튼을 눌러주세요!!")
+                    self.alarmButton.setText("알람시작")
             else:
-                alarm_price1 = float(self.alarm_price1.text())
-                alarm_price2 = float(self.alarm_price2.text())
+                if self.alarmFlag == 0:
+                    alarm_price1 = float(self.alarm_price1.text())
+                    alarm_price2 = float(self.alarm_price2.text())
 
-                if trade_price >= alarm_price1:
-                    QMessageBox.warning(self, "매도가격도달!", f"얼른 {self.ticker}를 매도하세요")
+                    if trade_price >= alarm_price1:
+                        QMessageBox.warning(self, "매도가격도달!", f"얼른 {self.ticker}를 매도하세요")
+                        self.alarmFlag = 1
 
-                if trade_price >= alarm_price2:
-                    QMessageBox.warning(self, "매수가격도달!", f"얼른 {self.ticker}를 매수하세요")
+                    if trade_price >= alarm_price2:
+                        QMessageBox.warning(self, "매수가격도달!", f"얼른 {self.ticker}를 매수하세요")
+                        self.alarmFlag = 1
 
 
 if __name__ == "__main__":
