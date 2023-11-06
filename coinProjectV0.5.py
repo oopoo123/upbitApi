@@ -78,6 +78,15 @@ class MainWindow(QMainWindow, form_class): # 슬롯 클래스
         self.low_price_label.setText(f"{low_price:,.0f}") # 당일 저가
         self.prev_closing_price_label.setText(f"{prev_closing_price:,.0f}") # 전일 종가
         self.trade_volume_label.setText(f"{trade_volume:.4f}") # 최근 거래량
+        self.updateStyle()
+
+    def updateStyle(self):
+        if "-" in self.coin_changelate_label.text():
+            self.coin_changelate_label.setStyleSheet("background-color:royalblue;color:white")
+            self.coin_price_label.setStyleSheet("color:royalblue")
+        else:
+            self.coin_changelate_label.setStyleSheet("background-color:red;")
+            self.coin_price_label.setStyleSheet("color:red")
 
 
 
