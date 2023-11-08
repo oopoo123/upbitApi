@@ -142,6 +142,10 @@ class MainWindow(QMainWindow, form_class):  # 슬롯 클래스
         else:
             self.alarmButton.setText("알람시작")
 
+    def telegram_message(self, message_text):
+        telegram_call = TelegramBotclass(self)
+
+
     def alarmCheck(self, trade_price): # 알람체크 슬롯함수
 
         if self.alarmButton.text() == "알람중지":
@@ -158,10 +162,28 @@ class MainWindow(QMainWindow, form_class):  # 슬롯 클래스
                     if trade_price >= alarm_price1:
                         QMessageBox.warning(self, "매도가격도달!", f"얼른 {self.ticker}를 매도하세요")
                         self.alarmFlag = 1
+                        self.telegram_message(f"{self.ticker} 현재가격 : {trade_price:,.0f}")
+                        self.telegram_message(f"알람설정가격 : {trade_price:,.0f}")
+                        self.telegram_message(f"매도 시기 입니다!")
 
                     if trade_price >= alarm_price2:
                         QMessageBox.warning(self, "매수가격도달!", f"얼른 {self.ticker}를 매수하세요")
                         self.alarmFlag = 1
+                        self.telegram_message(f"{self.ticker} 현재가격 : {trade_price:,.0f}")
+                        self.telegram_message(f"알람설정가격 : {trade_price2:,.0f}")
+                        self.telegram_message(f"매수 시기 입니다!")
+
+class TelegramBotclass(QThread): # 텔레그램 메시지 봇 클래스
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        token = "토큰"
+        chat_id = "챗아이디"
+        self.bot = telegram.Bot(token=token)
+
+    def telegramBot(self, text):
+    # 텔레그램으로 보낼 메시지를 인수로 넣어서 호출하면 해당 텍스트를 텔레그램 계정으로 전송하는 메서드
+        self.bot.sendMessage(chat_id=, text=text)
 
 
 if __name__ == "__main__":
